@@ -21,6 +21,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
   const [isHolding, setIsHolding] = useState(false);
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined);
   const { tool: selectedTool } = useSelector((state: TypesApplicationState) => state.selectedTool);
+  const { brushSize } = useSelector((state: TypesApplicationState) => state.toolSettings);
 
   const startHolding = useCallback((event: MouseEvent) => {
     const coordinates = getCoordinates(event);
@@ -60,12 +61,12 @@ const Canvas = ({ width, height }: CanvasProps) => {
         switch (selectedTool) {
           case ToolsEnum.PENCIL:
             if (mousePosition && newMousePosition) {
-              Pen(mousePosition, newMousePosition, contextRef, 'black', 10);
+              Pen(mousePosition, newMousePosition, contextRef, 'black', brushSize);
             }
             break;
           case ToolsEnum.ERASER:
             if (mousePosition && newMousePosition) {
-              Eraser(mousePosition, newMousePosition, contextRef, 10);
+              Eraser(mousePosition, newMousePosition, contextRef, brushSize);
             }
             break;
         }

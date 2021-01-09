@@ -7,6 +7,9 @@ interface TypesApplicationState {
   selectedTool: {
     tool: ToolsEnum;
   };
+  toolSettings: {
+    brushSize: number;
+  };
 }
 
 export default TypesApplicationState;
