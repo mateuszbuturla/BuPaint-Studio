@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import StyledCanvas from './StyledCanvas';
-
+import ToolsEnum from 'enums/ToolsEnum';
 import { Pen, Eraser } from 'tools';
+import { useSelector } from 'react-redux';
+import TypesApplicationState from 'types/TypesApplicationState';
 
 interface CanvasProps {
   width: number;
@@ -18,7 +20,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
   const contextRef = useRef<any | CanvasRenderingContext2D>(null);
   const [isHolding, setIsHolding] = useState(false);
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined);
-  const [currentTool, setCurrentTool] = useState('pen');
+  const { tool: selectedTool } = useSelector((state: TypesApplicationState) => state.selectedTool);
 
   const startHolding = useCallback((event: MouseEvent) => {
     const coordinates = getCoordinates(event);
@@ -55,13 +57,13 @@ const Canvas = ({ width, height }: CanvasProps) => {
     (event: MouseEvent) => {
       if (isHolding) {
         const newMousePosition = getCoordinates(event);
-        switch (currentTool) {
-          case 'pen':
+        switch (selectedTool) {
+          case ToolsEnum.PENCIL:
             if (mousePosition && newMousePosition) {
               Pen(mousePosition, newMousePosition, contextRef, 'black', 10);
             }
             break;
-          case 'eraser':
+          case ToolsEnum.ERASER:
             if (mousePosition && newMousePosition) {
               Eraser(mousePosition, newMousePosition, contextRef, 10);
             }
