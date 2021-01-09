@@ -1,3 +1,4 @@
 import Canvas from './Canvas';
+import ToolButton from './ToolButton';
 
-export { Canvas };
+export { Canvas, ToolButton };

@@ -1,0 +1,5 @@
+const SET_SELECTED_TOOL = 'SET_SELECTED_TOOL';
+
+export default {
+  SET_SELECTED_TOOL,
+};
