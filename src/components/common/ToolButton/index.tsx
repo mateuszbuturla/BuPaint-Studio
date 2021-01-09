@@ -7,9 +7,10 @@ import { default as selectedToolActions } from 'actions/selectedTool/actions';
 interface Props {
   icon: string;
   tool: ToolsEnum;
+  active?: boolean;
 }
 
-const ToolButton = ({ icon, tool }: Props) => {
+const ToolButton = ({ icon, tool, active }: Props) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
@@ -18,7 +19,7 @@ const ToolButton = ({ icon, tool }: Props) => {
 
   return (
     <StyledToolButton onClick={handleClick}>
-      <StyledToolButtonIcon src={icon} />
+      <StyledToolButtonIcon src={icon} active={active} />
     </StyledToolButton>
   );
 };
