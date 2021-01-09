@@ -7,7 +7,7 @@ const StyledToolSettingsBar = styled.div`
   top: 0px;
   left: 40px;
   background-color: ${(props) => props.theme.colors.lightBG};
-  padding-top: 10px;
+  padding: 10px 0px;
 `;
 
 export { StyledToolSettingsBar };
