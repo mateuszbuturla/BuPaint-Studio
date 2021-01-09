@@ -12,16 +12,29 @@ interface Props {
   onChange: any;
   value: number;
   additionalTextInput?: boolean;
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
-const Slider = ({ label, id, onChange, value, additionalTextInput }: Props) => {
+const Slider = ({
+  label,
+  id,
+  onChange,
+  value,
+  additionalTextInput,
+  min = 1,
+  max = 200,
+  step = 1,
+}: Props) => {
   return (
     <StyledSliderContainer>
       <StyledSliderLabel htmlFor={id}>{label}</StyledSliderLabel>
       <StyledSlider
         type="range"
-        min="1"
-        max="200"
+        min={min}
+        max={max}
+        step={step}
         value={value}
         onChange={onChange}
         additionalTextInput

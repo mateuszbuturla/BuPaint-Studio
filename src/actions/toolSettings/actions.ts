@@ -7,6 +7,14 @@ const setToolBrushSize = (item: number) => {
   };
 };
 
+const setToolBrushOpacity = (item: number) => {
+  return {
+    type: types.SET_TOOL_BRUSH_OPACITY,
+    item,
+  };
+};
+
 export default {
   setToolBrushSize,
+  setToolBrushOpacity,
 };

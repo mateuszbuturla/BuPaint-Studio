@@ -8,10 +8,16 @@ import TypesApplicationState from 'types/TypesApplicationState';
 
 const ToolSettingsBar = () => {
   const dispatch = useDispatch();
-  const { brushSize } = useSelector((state: TypesApplicationState) => state.toolSettings);
+  const { brushSize, brushOpacity } = useSelector(
+    (state: TypesApplicationState) => state.toolSettings,
+  );
 
   const handleChangeBrushSize = (e: React.ChangeEvent<HTMLButtonElement>) => {
     dispatch(toolSettingsActions.setToolBrushSize(Number(e.target.value)));
+  };
+
+  const handleChangeBrushOpacity = (e: React.ChangeEvent<HTMLButtonElement>) => {
+    dispatch(toolSettingsActions.setToolBrushOpacity(Number(e.target.value)));
   };
 
   return (
@@ -21,6 +27,18 @@ const ToolSettingsBar = () => {
         label="Brush size"
         onChange={handleChangeBrushSize}
         value={brushSize}
+        min={1}
+        max={200}
+        additionalTextInput
+      />
+      <Slider
+        id="toolOpacitySlider"
+        label="Opacity"
+        onChange={handleChangeBrushOpacity}
+        value={brushOpacity}
+        min={0}
+        max={1}
+        step={0.01}
         additionalTextInput
       />
     </StyledToolSettingsBar>

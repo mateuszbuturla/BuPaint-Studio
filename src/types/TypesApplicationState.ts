@@ -9,6 +9,7 @@ interface TypesApplicationState {
   };
   toolSettings: {
     brushSize: number;
+    brushOpacity: number;
   };
 }
 

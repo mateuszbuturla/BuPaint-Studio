@@ -19,11 +19,11 @@ interface StyledSliderProps {
 }
 
 const StyledSlider = styled.input<StyledSliderProps>`
-  width: ${(props) => (props.additionalTextInput ? 'calc(100% - 50px)' : 'calc(100% - 10px)')};
+  width: ${(props) => (props.additionalTextInput ? 'calc(100% - 55px)' : 'calc(100% - 10px)')};
 `;
 
 const StyledAdditionalTextInput = styled.input`
-  width: 30px;
+  width: 35px;
   border: none;
   outline: none;
   background-color: transparent;
