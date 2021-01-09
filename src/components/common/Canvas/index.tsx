@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import StyledCanvas from './StyledCanvas';
 
+import { Pen, Eraser } from 'tools';
+
 interface CanvasProps {
   width: number;
   height: number;
@@ -13,14 +15,16 @@ type Coordinate = {
 
 const Canvas = ({ width, height }: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isPainting, setIsPainting] = useState(false);
+  const contextRef = useRef<any | CanvasRenderingContext2D>(null);
+  const [isHolding, setIsHolding] = useState(false);
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined);
+  const [currentTool, setCurrentTool] = useState('pen');
 
-  const startPaint = useCallback((event: MouseEvent) => {
+  const startHolding = useCallback((event: MouseEvent) => {
     const coordinates = getCoordinates(event);
     if (coordinates) {
       setMousePosition(coordinates);
-      setIsPainting(true);
+      setIsHolding(true);
     }
   }, []);
 
@@ -29,11 +33,10 @@ const Canvas = ({ width, height }: CanvasProps) => {
       return;
     }
     const canvas: HTMLCanvasElement = canvasRef.current;
+    canvas.style.backgroundColor = '#fff';
     const context = canvas.getContext('2d');
-    if (context) {
-      context.strokeStyle = 'black';
-      context.lineJoin = 'round';
-      context.lineWidth = 5;
+    if (context && contextRef.current === null) {
+      contextRef.current = context;
     }
   }, []);
 
@@ -42,23 +45,32 @@ const Canvas = ({ width, height }: CanvasProps) => {
       return;
     }
     const canvas: HTMLCanvasElement = canvasRef.current;
-    canvas.addEventListener('mousedown', startPaint);
+    canvas.addEventListener('mousedown', startHolding);
     return () => {
-      canvas.removeEventListener('mousedown', startPaint);
+      canvas.removeEventListener('mousedown', startHolding);
     };
-  }, [startPaint]);
+  }, [startHolding]);
 
-  const paint = useCallback(
+  const duringHolding = useCallback(
     (event: MouseEvent) => {
-      if (isPainting) {
+      if (isHolding) {
         const newMousePosition = getCoordinates(event);
-        if (mousePosition && newMousePosition) {
-          drawLine(mousePosition, newMousePosition);
-          setMousePosition(newMousePosition);
+        switch (currentTool) {
+          case 'pen':
+            if (mousePosition && newMousePosition) {
+              Pen(mousePosition, newMousePosition, contextRef, 'black', 10);
+            }
+            break;
+          case 'eraser':
+            if (mousePosition && newMousePosition) {
+              Eraser(mousePosition, newMousePosition, contextRef, 10);
+            }
+            break;
         }
+        setMousePosition(newMousePosition);
       }
     },
-    [isPainting, mousePosition],
+    [isHolding, mousePosition],
   );
 
   useEffect(() => {
@@ -66,14 +78,14 @@ const Canvas = ({ width, height }: CanvasProps) => {
       return;
     }
     const canvas: HTMLCanvasElement = canvasRef.current;
-    canvas.addEventListener('mousemove', paint);
+    canvas.addEventListener('mousemove', duringHolding);
     return () => {
-      canvas.removeEventListener('mousemove', paint);
+      canvas.removeEventListener('mousemove', duringHolding);
     };
-  }, [paint]);
+  }, [duringHolding]);
 
-  const exitPaint = useCallback(() => {
-    setIsPainting(false);
+  const stopHolding = useCallback(() => {
+    setIsHolding(false);
     setMousePosition(undefined);
   }, []);
 
@@ -82,13 +94,13 @@ const Canvas = ({ width, height }: CanvasProps) => {
       return;
     }
     const canvas: HTMLCanvasElement = canvasRef.current;
-    canvas.addEventListener('mouseup', exitPaint);
-    canvas.addEventListener('mouseleave', exitPaint);
+    canvas.addEventListener('mouseup', stopHolding);
+    canvas.addEventListener('mouseleave', stopHolding);
     return () => {
-      canvas.removeEventListener('mouseup', exitPaint);
-      canvas.removeEventListener('mouseleave', exitPaint);
+      canvas.removeEventListener('mouseup', stopHolding);
+      canvas.removeEventListener('mouseleave', stopHolding);
     };
-  }, [exitPaint]);
+  }, [stopHolding]);
 
   const getCoordinates = (event: MouseEvent): Coordinate | undefined => {
     if (!canvasRef.current) {
@@ -99,23 +111,11 @@ const Canvas = ({ width, height }: CanvasProps) => {
     return { x: event.pageX - canvas.offsetLeft, y: event.pageY - canvas.offsetTop };
   };
 
-  const drawLine = (originalMousePosition: Coordinate, newMousePosition: Coordinate) => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    const context = canvas.getContext('2d');
-    if (context) {
-      context.beginPath();
-      context.moveTo(originalMousePosition.x, originalMousePosition.y);
-      context.lineTo(newMousePosition.x, newMousePosition.y);
-      context.closePath();
-
-      context.stroke();
-    }
-  };
-
-  return <StyledCanvas ref={canvasRef} height={height} width={width} />;
+  return (
+    <>
+      <StyledCanvas ref={canvasRef} height={height} width={width} />
+    </>
+  );
 };
 
 Canvas.defaultProps = {
