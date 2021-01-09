@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledToolBar } from './StyledToolBar';
 import ToolsEnum from 'enums/ToolsEnum';
-import { ToolButton } from 'components/common';
+import { ToolButton, ColorPicker } from 'components/common';
 import pencil from 'assets/icons/tools/pencil.svg';
 import eraser from 'assets/icons/tools/eraser.svg';
 import { useSelector } from 'react-redux';
@@ -33,6 +33,7 @@ const ToolBar = () => {
           active={tool.tool === selectedTool}
         />
       ))}
+      <ColorPicker />
     </StyledToolBar>
   );
 };

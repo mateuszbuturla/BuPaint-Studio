@@ -11,6 +11,9 @@ interface TypesApplicationState {
     brushSize: number;
     brushOpacity: number;
   };
+  selectedColor: {
+    color: any;
+  };
 }
 
 export default TypesApplicationState;
