@@ -24,6 +24,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
   const { brushSize, brushOpacity } = useSelector(
     (state: TypesApplicationState) => state.toolSettings,
   );
+  const { color } = useSelector((state: TypesApplicationState) => state.selectedColor);
 
   const startHolding = useCallback((event: MouseEvent) => {
     const coordinates = getCoordinates(event);
@@ -67,7 +68,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
                 mousePosition,
                 newMousePosition,
                 contextRef,
-                `rgba(0,0,0,${brushOpacity})`,
+                `rgba(${color.r}, ${color.g}, ${color.b},${brushOpacity})`,
                 brushSize,
               );
             }
