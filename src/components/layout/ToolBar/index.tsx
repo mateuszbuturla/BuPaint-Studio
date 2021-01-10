@@ -4,6 +4,7 @@ import ToolsEnum from 'enums/ToolsEnum';
 import { ToolButton, ColorPicker } from 'components/common';
 import pencil from 'assets/icons/tools/pencil.svg';
 import eraser from 'assets/icons/tools/eraser.svg';
+import colorPicker from 'assets/icons/tools/colorPicker.svg';
 import { useSelector } from 'react-redux';
 import TypesApplicationState from 'types/TypesApplicationState';
 
@@ -17,6 +18,11 @@ const tools = [
     name: 'Eraser',
     icon: eraser,
     tool: ToolsEnum.ERASER,
+  },
+  {
+    name: 'Color picker',
+    icon: colorPicker,
+    tool: ToolsEnum.COLOR_DROPPER,
   },
 ];
 
