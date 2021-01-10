@@ -21,7 +21,7 @@
 
 ## 🧐 About <a name = "about"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+A fast and easy-to-use drawing app
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
