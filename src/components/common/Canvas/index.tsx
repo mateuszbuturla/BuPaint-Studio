@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import StyledCanvas from './StyledCanvas';
 import ToolsEnum from 'enums/ToolsEnum';
-import { Pen, Eraser } from 'tools';
+import { Pen, Eraser, ColorDropper } from 'tools';
 import { useSelector } from 'react-redux';
 import TypesApplicationState from 'types/TypesApplicationState';
 
@@ -76,6 +76,11 @@ const Canvas = ({ width, height }: CanvasProps) => {
           case ToolsEnum.ERASER:
             if (mousePosition && newMousePosition) {
               Eraser(mousePosition, newMousePosition, contextRef, brushSize);
+            }
+            break;
+          case ToolsEnum.COLOR_DROPPER:
+            if (mousePosition) {
+              ColorDropper(mousePosition, contextRef);
             }
             break;
         }
