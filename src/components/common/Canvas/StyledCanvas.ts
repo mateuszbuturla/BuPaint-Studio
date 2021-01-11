@@ -1,8 +1,5 @@
 import styled from 'styled-components';
 
-const StyledCanvas = styled.canvas`
-  margin: 0 auto;
-  display: block;
-`;
+const StyledCanvas = styled.canvas``;
 
 export default StyledCanvas;

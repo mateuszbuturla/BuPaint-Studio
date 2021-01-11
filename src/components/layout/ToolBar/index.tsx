@@ -5,6 +5,7 @@ import { ToolButton, ColorPicker } from 'components/common';
 import pencil from 'assets/icons/tools/pencil.svg';
 import eraser from 'assets/icons/tools/eraser.svg';
 import colorPicker from 'assets/icons/tools/colorPicker.svg';
+import rectangle from 'assets/icons/tools/rectangle.svg';
 import { useSelector } from 'react-redux';
 import TypesApplicationState from 'types/TypesApplicationState';
 
@@ -23,6 +24,11 @@ const tools = [
     name: 'Color picker',
     icon: colorPicker,
     tool: ToolsEnum.COLOR_DROPPER,
+  },
+  {
+    name: 'Rectangle',
+    icon: rectangle,
+    tool: ToolsEnum.RECTANGLE,
   },
 ];
 

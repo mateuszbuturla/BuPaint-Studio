@@ -5,7 +5,17 @@ import { ToolBar, ToolSettingsBar } from 'components/layout';
 const App = () => {
   return (
     <>
-      <Canvas />
+      <div
+        style={{
+          display: 'flex',
+          width: '100vw',
+          height: '100vh',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Canvas />
+      </div>
       <ToolBar />
       <ToolSettingsBar />
     </>
